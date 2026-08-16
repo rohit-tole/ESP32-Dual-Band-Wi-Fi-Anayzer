@@ -11,6 +11,22 @@ How to wire it, what parts you need, and how to flash it from Arduino IDE: **[US
 
 Open `ESP32C5_WiFi_Planner/ESP32C5_WiFi_Planner.ino`. After it boots, tap **BOOT** to flip screens (spectrum → score → AP list → site). Hold BOOT on the list to scroll; on the other screens it dumps CSV over serial at 115200.
 
+**Spectrum**
+
+![Spectrum screen](docs/images/screen_spectrum.png)
+
+**Score**
+
+![Channel score screen](docs/images/screen_score.png)
+
+**AP list**
+
+![AP list screen](docs/images/screen_ap_list.png)
+
+**Site**
+
+![Site snapshot screen](docs/images/screen_site.png)
+
 Arduino settings that actually work on this hardware : Check these settings under tools menu in Arduino IDE.
 
 - Board: ESP32 → ESP32C5, package **3.3.1 or later**
@@ -22,6 +38,8 @@ Arduino settings that actually work on this hardware : Check these settings unde
 Put the board in download mode first if upload fails: hold BOOT, tap RESET, let go of BOOT.
 
 Wiring is the original pinout: 3V3/GND, then GPIO23 CS, 25 Reset, 24 DC, 8 MOSI, 10 SCK, 26 LED.
+
+![ESP32-C5 to ILI9341 wiring](docs/images/wiring.png)
 
 ## What’s in this folder
 
