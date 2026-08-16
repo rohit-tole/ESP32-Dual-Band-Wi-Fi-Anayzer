@@ -3,7 +3,7 @@
 The Hardware: ESP32-C5 board plus an ILI9341 screen, jumper cables and a bredboard to mount ESP32 and Screen. 
 Use: Walk around, see what’s on 2.4 GHz and 5 GHz, pick a quieter channel. That’s the whole point.
 
-This started from moononournation’s analyzer on [Instructables](https://www.instructables.com/ESP32-C5-Dual-Band-WiFi-Analyzer/). **v2.0** is the firmware in this repo (four screens, channel scores, AP list, a short site summary). v1.0 is basically that original project, with some UI tweaks.
+This started from moononournation’s analyzer on [Instructables](https://www.instructables.com/ESP32-C5-Dual-Band-WiFi-Analyzer/). **v2.0** is the firmware in this repo (four screens, channel scores, AP list, a short site summary). v1.0 is basically that original project from Instructables, with some UI tweaks made for better useability.
 
 How to wire it, what parts you need, and how to flash it from Arduino IDE: **[USER_MANUAL.md](USER_MANUAL.md)**
 
@@ -41,15 +41,15 @@ Open `ESP32C5_WiFi_Planner/ESP32C5_WiFi_Planner.ino`. After it boots, tap **BOOT
 **Site**
 
 <p><img src="docs/images/screen_site.png" alt="Site snapshot screen" width="640">
-<br><em>Firmware UI mockup (site snapshot)a.</em></p>
+<br><em>Firmware UI mockup (site snapshot).</em></p>
 
-Arduino settings that actually work on this hardware : Check these settings under tools menu in Arduino IDE.
+Arduino settings that actually work on this hardware : under tools menu in Arduino IDE.
 
 - Board: ESP32 → ESP32C5, package **3.3.1 or later**
 - Flash size **16MB**
 - Upload speed **921600**
 - Partition: **Huge APP (3MB No OTA)**
-- Libraries: GFX Library for Arduino (moononournation) and U8g2
+- Libraries: GFX Library for Arduino (moononournation) and U8g2 (https://github.com/moononournation/Arduino_GFX)
 
 Put the board in download mode first if upload fails: hold BOOT, tap RESET, let go of BOOT.
 
@@ -60,7 +60,7 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 
 - `ESP32C5_WiFi_Planner/` — current firmware (v2.0)
 - `USER_MANUAL.md` — parts, wiring, flashing, how the screens work
-- `Readme.txt` — the original hardware notes this repo was built from
+
 
 ## Image credits
 
