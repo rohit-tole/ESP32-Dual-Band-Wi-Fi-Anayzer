@@ -26,22 +26,22 @@ Open `ESP32C5_WiFi_Planner/ESP32C5_WiFi_Planner.ino`. After it boots, tap **BOOT
 **Spectrum**
 
 <p><img src="docs/images/screen_spectrum.png" alt="Spectrum screen" width="640">
-<br><em>Firmware UI mockup (spectrum). Not a photo of the device.</em></p>
+<br><em>Firmware UI mockup (spectrum).</em></p>
 
 **Score**
 
 <p><img src="docs/images/screen_score.png" alt="Channel score screen" width="640">
-<br><em>Firmware UI mockup (score). Not a photo of the device.</em></p>
+<br><em>Firmware UI mockup (score).</em></p>
 
 **AP list**
 
 <p><img src="docs/images/screen_ap_list.png" alt="AP list screen" width="640">
-<br><em>Firmware UI mockup (AP list). Not a photo of the device.</em></p>
+<br><em>Firmware UI mockup (AP list).</em></p>
 
 **Site**
 
 <p><img src="docs/images/screen_site.png" alt="Site snapshot screen" width="640">
-<br><em>Firmware UI mockup (site snapshot). Not a photo of the device.</em></p>
+<br><em>Firmware UI mockup (site snapshot)a.</em></p>
 
 Arduino settings that actually work on this hardware : Check these settings under tools menu in Arduino IDE.
 
@@ -54,7 +54,7 @@ Arduino settings that actually work on this hardware : Check these settings unde
 Put the board in download mode first if upload fails: hold BOOT, tap RESET, let go of BOOT.
 
 <p><img src="docs/images/wiring.png" alt="ESP32-C5 to ILI9341 wiring" width="640">
-<br><em>Wiring diagram for this project (pins from Readme.txt). SDO/MISO unused.</em></p>
+<br><em>Wiring diagram for this project.  SDO/MISO unused.</em></p>
 
 ## What’s in this folder
 
@@ -67,4 +67,4 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 - ESP32-C5 board: [Espressif ESP32-C5-DevKitC-1 user guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html)
 - ILI9341 module: [Banggood / staticbg photo](https://imgaz1.staticbg.com/thumb/large/oaupload/banggood/images/DE/26/ebb27e89-c2b9-4de0-8488-37da3f1b2651.JPG.webp) (typical SPI 320×240 module)
 - Spectrum / score / AP list / site screens: UI mockups of this project’s v2.0 firmware, not photos of hardware
-- wiring.png: pin diagram for this project (from Readme.txt: 3v3–VCC, GND, GPIO23–CS, GPIO25–Reset, GPIO24–DC/RS, GPIO8–SDI/MOSI, GPIO10–SCK, GPIO26–LED)
+- wiring.png: pin diagram for this project (3v3–VCC, GND, GPIO23–CS, GPIO25–Reset, GPIO24–DC/RS, GPIO8–SDI/MOSI, GPIO10–SCK, GPIO26–LED)
