@@ -14,9 +14,9 @@ How to wire it, what parts you need, and how to flash it from Arduino IDE: **[US
 </p>
 
 <p>
-<img src="docs/images/ili9341-board.png" alt="2.2 inch ILI9341 SPI TFT module" width="480">
+<img src="docs/images/ili9341-board.png" alt="Typical ILI9341 SPI TFT module" width="480">
 <br>
-<em>Typical 2.2&quot; ILI9341 SPI module (320×240, pins VCC GND CS RESET DC/RS SDI/MOSI SCK LED SDO/MISO). Photo from <a href="https://www.lcdwiki.com/2.2inch_SPI_Module_ILI9341_SKU:MSP2202">LCDwiki MSP2202</a>. SDO/MISO is unused here.</em>
+<em>Typical ILI9341 SPI module (320×240). Photo from <a href="https://imgaz1.staticbg.com/thumb/large/oaupload/banggood/images/DE/26/ebb27e89-c2b9-4de0-8488-37da3f1b2651.JPG.webp">Banggood / staticbg</a>. SDO/MISO is unused here.</em>
 </p>
 
 ## v2.0 in short
