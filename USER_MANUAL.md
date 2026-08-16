@@ -120,7 +120,7 @@ Then Library Manager: **GFX Library for Arduino** (moononournation) and **U8g2**
 
 File → Open → `ESP32C5_WiFi_Planner/ESP32C5_WiFi_Planner.ino`
 
-That’s v2.0. The other folder is the original one-screen sketch. Don’t open both in the same IDE window or Arduino will glue the `.ino` files together.
+That’s the current firmware. Don’t open another `.ino` from this repo in the same IDE window or Arduino will glue the files together.
 
 **Download mode**
 
@@ -167,7 +167,4 @@ Only scan networks you’re supposed to be looking at. C5 has no 6 GHz. DFS (52�
 
 ---
 
-## Versions
-
-- **1.x** — `ESP32C5WiFiAnalyzerUTF8`, one screen, the original ellipse plot
-- **2.0** — `ESP32C5_WiFi_Planner`, four screens, scoring, list, site page, CSV
+v1.0 is basically the original Instructables / moononournation project, with some UI tweaks. This manual is for v2.0 (`ESP32C5_WiFi_Planner`).

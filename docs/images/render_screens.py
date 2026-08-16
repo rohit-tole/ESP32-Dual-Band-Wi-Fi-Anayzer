@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
-"""Render ILI9341 320x240 mockups of ESP32C5_WiFi_Planner screens, then scale 3x."""
+"""Native 960x720 UI panels (same 4:3 as ILI9341). Fonts drawn at this size — no pixel scale-up."""
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
-W, H = 320, 240
-STATUS_H, FOOTER_H, RSSI_W = 16, 12, 36
-SCALE = 3
+W, H = 960, 720
+STATUS_H, FOOTER_H, RSSI_W = 48, 40, 96
 OUT = Path(__file__).resolve().parent
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-CYAN = (0, 255, 255)
-LIME = (0, 255, 0)
-YELLOW = (255, 255, 0)
-RED = (255, 0, 0)
-ORANGE = (255, 165, 0)
-MAGENTA = (255, 0, 255)
-LIGHTGREY = (192, 192, 192)
-MEDIUMBLUE = (0, 0, 180)
-LIMEGREEN = (50, 205, 50)
-DODGER = (30, 144, 255)
+BLACK = (12, 12, 14)
+WHITE = (245, 245, 245)
+CYAN = (64, 224, 255)
+LIME = (80, 220, 80)
+YELLOW = (255, 220, 70)
+RED = (255, 70, 70)
+ORANGE = (255, 160, 50)
+MAGENTA = (230, 80, 230)
+LIGHTGREY = (170, 170, 175)
+MEDIUMBLUE = (28, 55, 150)
+LIMEGREEN = (40, 160, 70)
+DODGER = (50, 140, 255)
+NAVY = (22, 40, 110)
 
 CH_COLORS = [RED, ORANGE, YELLOW, LIME, CYAN, DODGER, MAGENTA] * 12
 
@@ -53,24 +53,22 @@ def rssi_color(rssi):
     return RED
 
 
-def fonts():
-    candidates = [
+def font(size, bold=False):
+    paths = [
+        r"C:\Windows\Fonts\segoeui.ttf" if not bold else r"C:\Windows\Fonts\segoeuib.ttf",
+        r"C:\Windows\Fonts\calibri.ttf",
         r"C:\Windows\Fonts\consola.ttf",
-        r"C:\Windows\Fonts\cour.ttf",
-        r"C:\Windows\Fonts\lucon.ttf",
-        r"C:\Windows\Fonts\tahoma.ttf",
+        r"C:\Windows\Fonts\arial.ttf",
     ]
-    path = next((p for p in candidates if Path(p).exists()), None)
-
-    def f(size):
-        if path:
-            return ImageFont.truetype(path, size)
-        return ImageFont.load_default()
-
-    return f(8), f(9), f(10)
+    for p in paths:
+        if Path(p).exists():
+            return ImageFont.truetype(p, size)
+    return ImageFont.load_default()
 
 
-F5, F6, F8 = fonts()
+F14, F16, F18, F20, F22 = font(14), font(16), font(18), font(20), font(22)
+FB18 = font(18, True)
+FB22 = font(22, True)
 
 
 def new_screen():
@@ -79,72 +77,51 @@ def new_screen():
 
 
 def status(d, page, name, n24, n50, rec24, rec50):
-    d.rectangle((0, 0, W, STATUS_H), fill=MEDIUMBLUE)
-    d.text((2, 4), f"{page}/4 {name}  2.4:{n24}  5:{n50}  3s  use {rec24}/{rec50}",
-           fill=WHITE, font=F5)
+    d.rectangle((0, 0, W, STATUS_H), fill=NAVY)
+    d.text((14, 12), f"{page}/4  {name}    2.4:{n24}    5:{n50}    3s    use {rec24}/{rec50}",
+           fill=WHITE, font=F20)
 
 
 def footer(d, list_page=False):
-    d.rectangle((0, H - FOOTER_H, W, H), fill=MEDIUMBLUE)
-    msg = "BOOT short: next screen   hold: scroll list" if list_page else \
-          "BOOT short: next screen   hold: CSV on Serial"
-    d.text((2, H - 10), msg, fill=CYAN, font=F5)
+    d.rectangle((0, H - FOOTER_H, W, H), fill=NAVY)
+    msg = "BOOT short: next screen      hold: scroll list" if list_page else \
+          "BOOT short: next screen      hold: CSV on Serial"
+    d.text((14, H - 30), msg, fill=CYAN, font=F16)
 
 
 def half_ellipse(d, cx, baseline, rx, ry, color):
-    if rx < 1:
-        rx = 1
-    if ry < 1:
-        ry = 1
-    box = [cx - rx, baseline - ry, cx + rx, baseline + ry]
-    d.pieslice(box, 180, 360, fill=color, outline=color)
+    rx, ry = max(3, rx), max(3, ry)
+    d.pieslice([cx - rx, baseline - ry, cx + rx, baseline + ry], 180, 360, fill=color)
 
 
 def rssi_scale(d, baseline, graph_h):
     x = W - RSSI_W
     for rssi in (-30, -50, -70, -90):
-        y = baseline - int((rssi - (-100)) * (graph_h - 1) / ((-30) - (-100)))
+        y = baseline - int((rssi - (-100)) * (graph_h - 1) / 70)
         c = rssi_color(rssi)
-        d.line((x, y, x + 6, y), fill=c)
-        d.text((x + 8, y - 4), str(rssi), fill=c, font=F5)
+        d.line((x, y, x + 16, y), fill=c, width=2)
+        d.text((x + 22, y - 10), str(rssi), fill=c, font=F16)
 
 
-# Sample survey
 APS_24 = [
-    ("Office", 6, 20, -41),
-    ("Cafe-Free", 6, 20, -55),
-    ("Home", 1, 20, -62),
-    ("IoT-Hub", 1, 20, -78),
-    ("Neighbor", 3, 20, -71),
-    ("Guest", 11, 20, -70),
-    ("Printer", 11, 20, -81),
-    ("Shop", 6, 20, -68),
-    ("APT-2G", 6, 40, -58),
-    ("Cam-01", 1, 20, -84),
-    ("Mesh-2G", 11, 20, -66),
-    ("Lab", 6, 20, -73),
+    ("Office", 6, 20, -41), ("Cafe-Free", 6, 20, -55), ("Home", 1, 20, -62),
+    ("IoT-Hub", 1, 20, -78), ("Neighbor", 3, 20, -71), ("Guest", 11, 20, -70),
+    ("Printer", 11, 20, -81), ("Shop", 6, 20, -68), ("APT-2G", 6, 40, -58),
+    ("Cam-01", 1, 20, -84), ("Mesh-2G", 11, 20, -66), ("Lab", 6, 20, -73),
 ]
 APS_50 = [
-    ("Home", 36, 80, -48),
-    ("Corp", 149, 80, -52),
-    ("Mesh-5", 44, 40, -65),
-    ("Office-5", 40, 80, -61),
-    ("Guest5", 149, 40, -69),
-    ("APT-5", 157, 20, -72),
-    ("IoT-5", 36, 20, -77),
-    ("Radar-AP", 100, 80, -64),
-    ("U3-Back", 161, 20, -80),
+    ("Home", 36, 80, -48), ("Corp", 149, 80, -52), ("Mesh-5", 44, 40, -65),
+    ("Office-5", 40, 80, -61), ("Guest5", 149, 40, -69), ("APT-5", 157, 20, -72),
+    ("IoT-5", 36, 20, -77), ("Radar-AP", 100, 80, -64), ("U3-Back", 161, 20, -80),
 ]
 COUNTS_24 = {1: 4, 3: 1, 6: 5, 11: 3}
 COUNTS_50 = {36: 2, 40: 1, 44: 1, 100: 1, 149: 2, 157: 1, 161: 1}
 
 
 def save(im, name):
-    big = im.resize((W * SCALE, H * SCALE), Image.NEAREST)
     path = OUT / name
-    big.save(path, "PNG")
-    print("wrote", path)
-    return path
+    im.save(path, "PNG", optimize=True)
+    print("wrote", path, im.size)
 
 
 def draw_spectrum():
@@ -152,31 +129,28 @@ def draw_spectrum():
     status(d, 1, "SPECTRUM", 12, 9, 1, 149)
     footer(d)
     plot_h = H - STATUS_H - FOOTER_H
-    graph_h = plot_h // 2 - 16
+    graph_h = plot_h // 2 - 48
     g24 = STATUS_H + graph_h
-    g50 = g24 + 16 + graph_h
+    g50 = g24 + 48 + graph_h
     plot_w = W - RSSI_W
-    ch24_w = plot_w // (14 + 2)
+    ch24_w = plot_w // 16
     ch50_w = plot_w // (len(LEGEND) - 14 + 4)
-
-    d.rectangle((0, STATUS_H, W, H - FOOTER_H), fill=BLACK)
     rssi_scale(d, g24, graph_h)
     rssi_scale(d, g50, graph_h)
 
     def plot(ssid, ch, bw, rssi, band24):
         idx = channel_idx(ch)
-        height = max(1, min(graph_h, int((rssi - (-100)) * graph_h / 70)))
+        height = max(4, min(graph_h, int((rssi + 100) * graph_h / 70)))
         if band24:
             baseline, sig_w = g24, ch24_w * (4 if bw >= 40 else 2)
             offset = (idx + 2) * ch24_w
         else:
             baseline = g50
             mul = 16 if bw >= 80 else (8 if bw >= 40 else 4)
-            sig_w = ch50_w * mul
-            offset = (idx - 14 + 4) * ch50_w
+            sig_w, offset = ch50_w * mul, (idx - 14 + 4) * ch50_w
         col = CH_COLORS[idx % len(CH_COLORS)]
-        half_ellipse(d, offset, baseline + 1, sig_w, height, col)
-        return offset, baseline, height, col, idx
+        half_ellipse(d, offset, baseline + 2, sig_w, height, col)
+        return offset, baseline, height, col
 
     peaks24 = [("Office", 6, 20, -41), ("Home", 1, 20, -62), ("Mesh-2G", 11, 20, -66)]
     peaks50 = [("Home", 36, 80, -48), ("Corp", 149, 80, -52), ("Radar-AP", 100, 80, -64)]
@@ -185,71 +159,65 @@ def draw_spectrum():
     for ap in APS_50:
         plot(*ap, False)
     for ssid, ch, bw, rssi in peaks24:
-        off, base, ht, col, _ = plot(ssid, ch, bw, rssi, True)
-        y = max(STATUS_H + 8, base - ht - 8)
-        d.text((off - 18, y), f"{ssid} {rssi}", fill=col, font=F5)
+        off, base, ht, col = plot(ssid, ch, bw, rssi, True)
+        d.text((off - 40, max(STATUS_H + 10, base - ht - 22)), f"{ssid}  {rssi}", fill=col, font=F16)
     for ssid, ch, bw, rssi in peaks50:
-        off, base, ht, col, _ = plot(ssid, ch, bw, rssi, False)
-        y = max(g24 + 20, base - ht - 8)
-        d.text((max(20, off - 16), y), f"{ssid} {rssi}", fill=col, font=F5)
+        off, base, ht, col = plot(ssid, ch, bw, rssi, False)
+        d.text((max(40, off - 36), max(g24 + 40, base - ht - 22)), f"{ssid}  {rssi}", fill=col, font=F16)
 
-    d.line((0, g24, plot_w, g24), fill=WHITE)
-    d.line((0, g50, plot_w, g50), fill=WHITE)
+    d.line((0, g24, plot_w, g24), fill=WHITE, width=2)
+    d.line((0, g50, plot_w, g50), fill=WHITE, width=2)
     for idx in range(14):
         ch = LEGEND[idx]
         x = (idx + 2) * ch24_w
         if ch:
-            d.text((x - (2 if ch < 10 else 4), g24 + 2), str(ch),
-                   fill=LIME if ch == 1 else CH_COLORS[idx], font=F5)
+            d.text((x - 6, g24 + 6), str(ch), fill=LIME if ch == 1 else CH_COLORS[idx], font=F16)
         if COUNTS_24.get(ch):
-            d.text((x - 2, g24 + 9), str(COUNTS_24[ch]), fill=LIGHTGREY, font=F5)
+            d.text((x - 4, g24 + 26), str(COUNTS_24[ch]), fill=LIGHTGREY, font=F14)
     for idx in range(14, len(LEGEND)):
         ch = LEGEND[idx]
         x = (idx - 14 + 4) * ch50_w
         if ch:
-            d.text((x - (4 if ch < 100 else 5), g50 + 2), str(ch),
-                   fill=LIME if ch == 149 else CH_COLORS[idx % len(CH_COLORS)], font=F5)
+            d.text((x - 10, g50 + 6), str(ch), fill=LIME if ch == 149 else CH_COLORS[idx % len(CH_COLORS)], font=F14)
         if COUNTS_50.get(ch):
-            d.text((x - 2, g50 + 9), str(COUNTS_50[ch]), fill=LIGHTGREY, font=F5)
+            d.text((x - 4, g50 + 26), str(COUNTS_50[ch]), fill=LIGHTGREY, font=F14)
 
-    d.rectangle((2, g24 + 6, 22, g24 + 15), fill=MEDIUMBLUE)
-    d.text((3, g24 + 7), "2.4", fill=WHITE, font=F5)
-    d.rectangle((2, g50 + 6, 14, g50 + 15), fill=LIMEGREEN)
-    d.text((4, g50 + 7), "5", fill=WHITE, font=F5)
+    d.rounded_rectangle((8, g24 + 18, 58, g24 + 42), radius=4, fill=MEDIUMBLUE)
+    d.text((14, g24 + 21), "2.4", fill=WHITE, font=F16)
+    d.rounded_rectangle((8, g50 + 18, 40, g50 + 42), radius=4, fill=LIMEGREEN)
+    d.text((16, g50 + 21), "5", fill=WHITE, font=F16)
     save(im, "screen_spectrum.png")
 
 
-def bar(d, x, y, maxw, val, vmax, col):
-    d.rectangle((x, y, x + maxw, y + 8), outline=LIGHTGREY)
+def bar(d, x, y, maxw, h, val, vmax, col):
+    d.rounded_rectangle((x, y, x + maxw, y + h), radius=3, outline=LIGHTGREY, width=1)
     w = int(val * maxw / max(1, vmax))
-    if w:
-        d.rectangle((x, y, x + w, y + 8), fill=col)
+    if w >= 4:
+        d.rounded_rectangle((x, y, x + w, y + h), radius=3, fill=col)
 
 
 def draw_score():
     im, d = new_screen()
     status(d, 2, "SCORE", 12, 9, 1, 149)
     footer(d)
-    d.rectangle((0, STATUS_H, W, H - FOOTER_H), fill=BLACK)
-    y = STATUS_H + 6
-    d.text((4, y), "Recommend  2.4: ch", fill=CYAN, font=F6)
-    d.text((118, y), "1", fill=LIME, font=F6)
-    d.text((132, y), "   5: ch", fill=CYAN, font=F6)
-    d.text((186, y), "149", fill=LIME, font=F6)
-    d.text((210, y), "  DFS alt 100", fill=ORANGE, font=F6)
-    y += 14
-    d.text((4, y), "2.4 GHz  score 1 / 6 / 11  (overlap included)", fill=WHITE, font=F5)
-    scores24 = [(1, 18, 4), (6, 72, 5), (11, 28, 3)]
-    y += 8
-    for ch, s, n in scores24:
+    y = STATUS_H + 18
+    d.text((16, y), "Recommend  2.4: ch", fill=CYAN, font=F20)
+    d.text((268, y), "1", fill=LIME, font=FB22)
+    d.text((300, y), "    5: ch", fill=CYAN, font=F20)
+    d.text((410, y), "149", fill=LIME, font=FB22)
+    d.text((470, y), "    DFS alt 100", fill=ORANGE, font=F20)
+    y += 42
+    d.text((16, y), "2.4 GHz  score 1 / 6 / 11  (overlap included)", fill=WHITE, font=F18)
+    y += 32
+    for ch, s, n in ((1, 18, 4), (6, 72, 5), (11, 28, 3)):
         col = LIME if ch == 1 else (RED if ch == 6 else YELLOW)
-        d.text((4, y + 1), f"ch{ch:2d}", fill=col, font=F6)
-        bar(d, 32, y, 200, s, 72, col)
-        d.text((238, y + 1), f"{s}  {n}AP", fill=WHITE, font=F5)
-        y += 12
-    y += 4
-    d.text((4, y), "5 GHz  (U1/U3 non-DFS first; DFS marked *)", fill=WHITE, font=F5)
-    y += 10
+        d.text((16, y + 2), f"ch {ch}", fill=col, font=F18)
+        bar(d, 90, y, 620, 22, s, 72, col)
+        d.text((730, y + 2), f"{s}   {n} AP", fill=WHITE, font=F18)
+        y += 36
+    y += 12
+    d.text((16, y), "5 GHz  (U1/U3 non-DFS first; DFS marked *)", fill=WHITE, font=F18)
+    y += 30
     rows = [
         (36, 22, False, False), (149, 14, False, True),
         (40, 18, False, False), (153, 4, False, False),
@@ -260,27 +228,22 @@ def draw_score():
         (132, 0, True, False), (140, 1, True, False),
         (60, 0, True, False),
     ]
-    vmax5 = 22
-    col0, col1, row_h = 4, 164, 10
-    n = len(rows)
-    half = (n + 1) // 2
+    half = (len(rows) + 1) // 2
     for r in range(half):
         for c in range(2):
             k = r + c * half
-            if k >= n:
+            if k >= len(rows):
                 continue
             ch, s, dfs, rec = rows[k]
-            x = col0 if c == 0 else col1
-            yy = y + r * row_h
+            x = 16 if c == 0 else 490
+            yy = y + r * 28
             col = ORANGE if dfs else (LIME if rec else CYAN)
-            mark = "*" if dfs else " "
-            arrow = ">" if rec else " "
-            d.text((x, yy), f"{mark}{ch:3d}{arrow}", fill=col, font=F5)
-            bar(d, x + 28, yy + 1, 88, s, vmax5, col)
-            d.text((x + 118, yy), str(s), fill=WHITE, font=F5)
-    d.text((4, H - FOOTER_H - 10),
+            d.text((x, yy), f"{'*' if dfs else ' '}{ch}{'>' if rec else ''}", fill=col, font=F16)
+            bar(d, x + 70, yy + 4, 250, 14, s, 22, col)
+            d.text((x + 330, yy), str(s), fill=WHITE, font=F16)
+    d.text((16, H - FOOTER_H - 32),
            "Lower score = cleaner. Relative RSSI, not a calibrated meter.",
-           fill=LIGHTGREY, font=F5)
+           fill=LIGHTGREY, font=F16)
     save(im, "screen_score.png")
 
 
@@ -288,28 +251,27 @@ def draw_list():
     im, d = new_screen()
     status(d, 3, "AP LIST", 12, 9, 1, 149)
     footer(d, list_page=True)
-    d.rectangle((0, STATUS_H, W, H - FOOTER_H), fill=BLACK)
-    d.text((2, STATUS_H + 2), "SSID              CH BW  RSSI AUTH PHY", fill=LIGHTGREY, font=F5)
+    d.text((16, STATUS_H + 12), "SSID                 CH    BW    RSSI    AUTH    PHY", fill=LIGHTGREY, font=F16)
     rows = [
-        ("Office          ", 6, 20, -41, "WPA2", "ax", False, False),
-        ("Home            ", 36, 80, -48, "WPA2", "ax", False, False),
-        ("Corp            ", 149, 80, -52, "WPA3", "ax", False, False),
-        ("Cafe-Free       ", 6, 20, -55, "OPEN", "g", False, True),
-        ("APT-2G          ", 6, 40, -58, "WPA2", "n", False, False),
-        ("Office-5        ", 40, 80, -61, "WPA2", "ax", False, False),
-        ("Home            ", 1, 20, -62, "WPA2", "n", False, False),
-        ("Radar-AP        ", 100, 80, -64, "WPA2", "ac", True, False),
-        ("Mesh-5          ", 44, 40, -65, "WPA2", "ac", False, False),
-        ("Mesh-2G         ", 11, 20, -66, "WPA2", "n", False, False),
+        ("Office", 6, 20, -41, "WPA2", "ax", False, False),
+        ("Home", 36, 80, -48, "WPA2", "ax", False, False),
+        ("Corp", 149, 80, -52, "WPA3", "ax", False, False),
+        ("Cafe-Free", 6, 20, -55, "OPEN", "g", False, True),
+        ("APT-2G", 6, 40, -58, "WPA2", "n", False, False),
+        ("Office-5", 40, 80, -61, "WPA2", "ax", False, False),
+        ("Home", 1, 20, -62, "WPA2", "n", False, False),
+        ("Radar-AP", 100, 80, -64, "WPA2", "ac", True, False),
+        ("Mesh-5", 44, 40, -65, "WPA2", "ac", False, False),
+        ("Mesh-2G", 11, 20, -66, "WPA2", "n", False, False),
     ]
-    y = STATUS_H + 14
+    y = STATUS_H + 42
     for ssid, ch, bw, rssi, auth, phy, dfs, open_ap in rows:
         col = RED if open_ap else rssi_color(rssi)
         star = "*" if dfs else ""
-        line = f"{ssid} {ch:3d} {bw:2d} {rssi:4d} {auth:<5} {phy}{star}"
-        d.text((2, y), line, fill=col, font=F5)
-        y += 10
-    d.text((2, H - FOOTER_H - 10), "1-10 / 21   *DFS   red=OPEN", fill=CYAN, font=F5)
+        line = f"{ssid:<16} {ch:>4}   {bw:>3}   {rssi:>4}    {auth:<5}   {phy}{star}"
+        d.text((16, y), line, fill=col, font=F18)
+        y += 32
+    d.text((16, H - FOOTER_H - 32), "1–10 / 21     *DFS     red = OPEN", fill=CYAN, font=F16)
     save(im, "screen_ap_list.png")
 
 
@@ -317,39 +279,31 @@ def draw_site():
     im, d = new_screen()
     status(d, 4, "SITE", 12, 9, 1, 149)
     footer(d)
-    d.rectangle((0, STATUS_H, W, H - FOOTER_H), fill=BLACK)
     lines = [
-        ("Site snapshot  (beacon survey)", CYAN),
-        ("APs  total 21   2.4 GHz 12   5 GHz 9", WHITE),
-        ("Security  OPEN 1   WPA2 16   WPA3/mix 2   hidden 2", RED),
-        ("PHY  ax 8   ac 4   n 7", WHITE),
-        ("2.4 MHz-40 APs: 1   avoid — eats 1/6/11", ORANGE),
-        ("DFS APs: 1   (weather radar bands 52-144)", ORANGE),
-        ("Dual-band SSIDs: 3  Home", WHITE),
-        ("SSID on 3+ channels: 1  Office (6,40,149)", YELLOW),
-        ("Strongest  Office  ch6 20MHz  -41 dBm  WPA2 ax", CYAN),
-        ("Plan: 2.4 -> ch 1 (score 18)    5 -> ch 149 (score 14)", LIME),
-        ("Not airtime/CCA. PCB antenna, uncalibrated RSSI. CSV on Serial @115200.", LIGHTGREY),
+        ("Site snapshot  (beacon survey)", CYAN, FB22),
+        ("APs  total 21     2.4 GHz 12     5 GHz 9", WHITE, F20),
+        ("Security  OPEN 1     WPA2 16     WPA3/mix 2     hidden 2", RED, F20),
+        ("PHY  ax 8     ac 4     n 7", WHITE, F20),
+        ("2.4 MHz-40 APs: 1     avoid — eats 1/6/11", ORANGE, F20),
+        ("DFS APs: 1     (weather radar bands 52–144)", ORANGE, F20),
+        ("Dual-band SSIDs: 3  Home", WHITE, F20),
+        ("SSID on 3+ channels: 1  Office (6, 40, 149)", YELLOW, F20),
+        ("Strongest  Office  ch6  20 MHz  −41 dBm  WPA2 ax", CYAN, F20),
+        ("Plan:  2.4 → ch 1 (score 18)      5 → ch 149 (score 14)", LIME, F20),
+        ("Not airtime/CCA. PCB antenna, uncalibrated RSSI. CSV on Serial @115200.", LIGHTGREY, F16),
     ]
-    y = STATUS_H + 4
-    for text, col in lines:
-        d.text((4, y), text, fill=col, font=F5)
-        y += 11 if col != LIGHTGREY else 14
+    y = STATUS_H + 20
+    for text, col, fnt in lines:
+        d.text((20, y), text, fill=col, font=fnt)
+        y += 38 if fnt != F16 else 42
     save(im, "screen_site.png")
 
 
 def draw_wiring():
-    """Simple pin map, not a fake photo of hardware."""
-    ww, hh = 640, 360
-    im = Image.new("RGB", (ww, hh), (18, 18, 22))
+    ww, hh = 1100, 620
+    im = Image.new("RGB", (ww, hh), (22, 22, 26))
     d = ImageDraw.Draw(im)
-    title, body = F8, F6
-    try:
-        title = ImageFont.truetype(r"C:\Windows\Fonts\consola.ttf", 18)
-        body = ImageFont.truetype(r"C:\Windows\Fonts\consola.ttf", 14)
-    except OSError:
-        pass
-    d.text((20, 16), "ESP32-C5  →  ILI9341", fill=WHITE, font=title)
+    d.text((32, 24), "ESP32-C5  →  ILI9341", fill=WHITE, font=FB22)
     rows = [
         ("3V3", "VCC", LIME),
         ("GND", "GND", LIGHTGREY),
@@ -360,21 +314,43 @@ def draw_wiring():
         ("GPIO10", "SCK", MAGENTA),
         ("GPIO26", "LED", LIME),
     ]
-    y = 56
-    d.rounded_rectangle((24, 48, 280, 330), radius=8, outline=MEDIUMBLUE, width=2)
-    d.rounded_rectangle((360, 48, 616, 330), radius=8, outline=LIMEGREEN, width=2)
-    d.text((90, 58), "ESP32-C5", fill=CYAN, font=body)
-    d.text((430, 58), "ILI9341", fill=LIME, font=body)
-    y = 92
+    d.rounded_rectangle((40, 80, 420, 540), radius=12, outline=MEDIUMBLUE, width=3)
+    d.rounded_rectangle((680, 80, 1060, 540), radius=12, outline=LIMEGREEN, width=3)
+    d.text((150, 100), "ESP32-C5", fill=CYAN, font=FB22)
+    d.text((800, 100), "ILI9341", fill=LIME, font=FB22)
+    y = 160
     for a, b, col in rows:
-        d.text((48, y), a, fill=WHITE, font=body)
-        d.line((160, y + 8, 500, y + 8), fill=col, width=2)
-        d.text((520, y), b, fill=WHITE, font=body)
-        y += 28
-    d.text((24, hh - 28), "MISO not used. Backlight = GPIO26.", fill=LIGHTGREY, font=F6)
-    path = OUT / "wiring.png"
-    im.save(path, "PNG")
-    print("wrote", path)
+        d.text((70, y), a, fill=WHITE, font=F20)
+        d.line((250, y + 12, 900, y + 12), fill=col, width=3)
+        d.text((920, y), b, fill=WHITE, font=F20)
+        y += 42
+    d.text((40, hh - 40), "MISO not used. Backlight = GPIO26.", fill=LIGHTGREY, font=F16)
+    im.save(OUT / "wiring.png", "PNG", optimize=True)
+    print("wrote wiring.png", im.size)
+
+
+def draw_ili9341_board():
+    """Labeled reference drawing of a typical 2.2/2.8 SPI ILI9341 module."""
+    ww, hh = 900, 640
+    im = Image.new("RGB", (ww, hh), (236, 236, 232))
+    d = ImageDraw.Draw(im)
+    d.text((24, 16), "ILI9341 SPI TFT  (typical 2.2\" / 2.8\" module)", fill=(30, 30, 30), font=FB22)
+    # PCB
+    d.rounded_rectangle((180, 70, 720, 600), radius=10, fill=(20, 90, 45), outline=(10, 50, 25), width=3)
+    # glass
+    d.rectangle((210, 100, 690, 460), fill=(18, 32, 70), outline=(8, 12, 24), width=2)
+    d.text((340, 250), "320 × 240", fill=(180, 200, 255), font=FB22)
+    d.text((355, 290), "ILI9341", fill=(140, 170, 220), font=F20)
+    pins = ["VCC", "GND", "CS", "RESET", "DC/RS", "SDI/MOSI", "SCK", "LED", "SDO/MISO"]
+    x0 = 230
+    for i, name in enumerate(pins):
+        x = x0 + i * 50
+        d.rectangle((x, 480, x + 22, 560), fill=(200, 180, 40), outline=(80, 70, 10))
+        d.text((x - 6, 568), name, fill=(255, 255, 220), font=F14)
+    d.text((24, hh - 36), "Reference drawing — pin names as used in this project. SDO/MISO is unused.",
+           fill=(70, 70, 70), font=F16)
+    im.save(OUT / "ili9341-board.png", "PNG", optimize=True)
+    print("wrote ili9341-board.png", im.size)
 
 
 if __name__ == "__main__":
@@ -383,3 +359,4 @@ if __name__ == "__main__":
     draw_list()
     draw_site()
     draw_wiring()
+    draw_ili9341_board()

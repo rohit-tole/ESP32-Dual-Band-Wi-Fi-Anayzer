@@ -3,9 +3,21 @@
 The Hardware: ESP32-C5 board plus an ILI9341 screen, jumper cables and a bredboard to mount ESP32 and Screen. 
 Use: Walk around, see what’s on 2.4 GHz and 5 GHz, pick a quieter channel. That’s the whole point.
 
-This started from moononournation’s analyzer on [Instructables](https://www.instructables.com/ESP32-C5-Dual-Band-WiFi-Analyzer/). **v2.0** is the sketch I actually use for planning: four screens, channel scores, AP list, a short site summary.
+This started from moononournation’s analyzer on [Instructables](https://www.instructables.com/ESP32-C5-Dual-Band-WiFi-Analyzer/). **v2.0** is the firmware in this repo (four screens, channel scores, AP list, a short site summary). v1.0 is basically that original project, with some UI tweaks.
 
 How to wire it, what parts you need, and how to flash it from Arduino IDE: **[USER_MANUAL.md](USER_MANUAL.md)**
+
+<p>
+<img src="docs/images/esp32-c5-board.png" alt="ESP32-C5-DevKitC-1" width="520">
+<br>
+<em>ESP32-C5-DevKitC-1. Photo from <a href="https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html">Espressif’s DevKitC-1 user guide</a>.</em>
+</p>
+
+<p>
+<img src="docs/images/ili9341-board.png" alt="ILI9341 SPI TFT pin reference" width="480">
+<br>
+<em>ILI9341 SPI module pin reference (typical 2.2&quot;/2.8&quot; board). SDO/MISO is unused here.</em>
+</p>
 
 ## v2.0 in short
 
@@ -13,19 +25,19 @@ Open `ESP32C5_WiFi_Planner/ESP32C5_WiFi_Planner.ino`. After it boots, tap **BOOT
 
 **Spectrum**
 
-![Spectrum screen](docs/images/screen_spectrum.png)
+<p><img src="docs/images/screen_spectrum.png" alt="Spectrum screen" width="640"></p>
 
 **Score**
 
-![Channel score screen](docs/images/screen_score.png)
+<p><img src="docs/images/screen_score.png" alt="Channel score screen" width="640"></p>
 
 **AP list**
 
-![AP list screen](docs/images/screen_ap_list.png)
+<p><img src="docs/images/screen_ap_list.png" alt="AP list screen" width="640"></p>
 
 **Site**
 
-![Site snapshot screen](docs/images/screen_site.png)
+<p><img src="docs/images/screen_site.png" alt="Site snapshot screen" width="640"></p>
 
 Arduino settings that actually work on this hardware : Check these settings under tools menu in Arduino IDE.
 
@@ -39,11 +51,10 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 
 Wiring is the original pinout: 3V3/GND, then GPIO23 CS, 25 Reset, 24 DC, 8 MOSI, 10 SCK, 26 LED.
 
-![ESP32-C5 to ILI9341 wiring](docs/images/wiring.png)
+<p><img src="docs/images/wiring.png" alt="ESP32-C5 to ILI9341 wiring" width="640"></p>
 
 ## What’s in this folder
 
-- `ESP32C5_WiFi_Planner/` — **v2.0**, use this
-- `ESP32C5WiFiAnalyzerUTF8/` — original single-screen analyzer
+- `ESP32C5_WiFi_Planner/` — current firmware (v2.0)
 - `USER_MANUAL.md` — parts, wiring, flashing, how the screens work
 - `Readme.txt` — the original hardware notes this repo was built from
