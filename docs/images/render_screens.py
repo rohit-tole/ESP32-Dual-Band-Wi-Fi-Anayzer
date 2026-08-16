@@ -305,7 +305,7 @@ def draw_wiring():
     d = ImageDraw.Draw(im)
     d.text((32, 24), "ESP32-C5  →  ILI9341", fill=WHITE, font=FB22)
     rows = [
-        ("3V3", "VCC", LIME),
+        ("3v3", "VCC", LIME),
         ("GND", "GND", LIGHTGREY),
         ("GPIO23", "CS", CYAN),
         ("GPIO25", "Reset", YELLOW),
@@ -359,4 +359,4 @@ if __name__ == "__main__":
     draw_list()
     draw_site()
     draw_wiring()
-    draw_ili9341_board()
+    # ili9341-board.png is a real LCDwiki product photo, not generated here

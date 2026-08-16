@@ -14,9 +14,9 @@ How to wire it, what parts you need, and how to flash it from Arduino IDE: **[US
 </p>
 
 <p>
-<img src="docs/images/ili9341-board.png" alt="ILI9341 SPI TFT pin reference" width="480">
+<img src="docs/images/ili9341-board.png" alt="2.2 inch ILI9341 SPI TFT module" width="480">
 <br>
-<em>ILI9341 SPI module pin reference (typical 2.2&quot;/2.8&quot; board). SDO/MISO is unused here.</em>
+<em>Typical 2.2&quot; ILI9341 SPI module (320×240, pins VCC GND CS RESET DC/RS SDI/MOSI SCK LED SDO/MISO). Photo from <a href="https://www.lcdwiki.com/2.2inch_SPI_Module_ILI9341_SKU:MSP2202">LCDwiki MSP2202</a>. SDO/MISO is unused here.</em>
 </p>
 
 ## v2.0 in short
@@ -49,7 +49,20 @@ Arduino settings that actually work on this hardware : Check these settings unde
 
 Put the board in download mode first if upload fails: hold BOOT, tap RESET, let go of BOOT.
 
-Wiring is the original pinout: 3V3/GND, then GPIO23 CS, 25 Reset, 24 DC, 8 MOSI, 10 SCK, 26 LED.
+PIN connectivity -
+
+```
+ESP32-C5    ILI9341
+========    =======
+3v3      -> VCC
+GND      -> GND
+GPIO23   -> CS
+GPIO25   -> Reset
+GPIO24   -> DC/RS
+GPIO8    -> SDI/MOSI
+GPIO10   -> SCK
+GPIO26   -> LED
+```
 
 <p><img src="docs/images/wiring.png" alt="ESP32-C5 to ILI9341 wiring" width="640"></p>
 
