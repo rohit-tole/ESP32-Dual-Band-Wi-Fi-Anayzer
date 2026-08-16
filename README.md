@@ -68,9 +68,6 @@ GPIO10   -> SCK
 GPIO26   -> LED
 ```
 
-<p><img src="docs/images/wiring.png" alt="ESP32-C5 to ILI9341 wiring" width="640">
-<br><em>Wiring diagram for this project (same pins as the table above).</em></p>
-
 ## What’s in this folder
 
 - `ESP32C5_WiFi_Planner/` — current firmware (v2.0)
@@ -82,4 +79,3 @@ GPIO26   -> LED
 - ESP32-C5 board: [Espressif ESP32-C5-DevKitC-1 user guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html)
 - ILI9341 module: [Banggood / staticbg photo](https://imgaz1.staticbg.com/thumb/large/oaupload/banggood/images/DE/26/ebb27e89-c2b9-4de0-8488-37da3f1b2651.JPG.webp) (typical SPI 320×240 module)
 - Spectrum / score / AP list / site screens: UI mockups of this project’s v2.0 firmware, not photos of hardware
-- wiring.png: pin diagram drawn for this project
