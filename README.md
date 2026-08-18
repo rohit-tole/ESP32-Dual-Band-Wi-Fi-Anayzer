@@ -21,7 +21,7 @@ How to wire it, what parts you need, and how to flash it from Arduino IDE: **[US
 
 ## v2.0 in short
 
-Open `ESP32C5_WiFi_Planner/ESP32C5_WiFi_Planner.ino`. After it boots, tap **BOOT** to flip screens (spectrum → score → AP list → site). Hold BOOT on the list to scroll; on the other screens it dumps CSV over serial at 115200.
+After it boots, tap **BOOT** to flip screens (spectrum → score → AP list → site). Hold BOOT on the list to scroll; on the other screens it dumps CSV over serial at 115200.
 
 **Spectrum**
 
