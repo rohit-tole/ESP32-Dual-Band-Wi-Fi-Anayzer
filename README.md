@@ -58,11 +58,11 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 
 ## What’s in this folder
 
-- `ESP32C5_WiFi_Planner/` — current firmware (v2.0)
+- `Dual Band Wi-Fi Analyser v2.0/` — current firmware (v2.0)
 - `USER_MANUAL.md` — parts, wiring, flashing, how the screens work
 - `docs/images/` — board photos, wiring diagram, and screen mockups
-- `ESP32C5WiFiAnalyzerUTF8/` — v1.0 sketch (original Instructables analyzer, with some UI tweaks)
-- `ESP32C5WiFiAnalyzerUTF8_1.ino` — older single-file copy of that v1 sketch (Arduino IDE wants the `.ino` inside a matching folder; use the folder above)
+- `Dual Band Wi-Fi Analyser v1.0/` — v1.0 sketch (original Instructables analyzer, with some UI tweaks)
+- `ESP32C5WiFiAnalyzerUTF8_1.ino` — extra v1 copy at repo root (open the v1.0 folder in Arduino IDE, not this file)
 - `Readme.txt` — original hardware / pin notes
 - `firmware` — leftover placeholder from the first repo upload; not used by v2.0
 

@@ -118,7 +118,7 @@ Then Library Manager: **GFX Library for Arduino** (moononournation) and **U8g2**
 
 **Open the right sketch**
 
-File → Open → `ESP32C5_WiFi_Planner/ESP32C5_WiFi_Planner.ino`
+File → Open → `Dual Band Wi-Fi Analyser v2.0/Dual Band Wi-Fi Analyser v2.0.ino`
 
 That’s the current firmware. Don’t open another `.ino` from this repo in the same IDE window or Arduino will glue the files together.
 
@@ -167,4 +167,4 @@ Only scan networks you’re supposed to be looking at. C5 has no 6 GHz. DFS (52�
 
 ---
 
-v1.0 is basically the original Instructables / moononournation project, with some UI tweaks. This manual is for v2.0 (`ESP32C5_WiFi_Planner`).
+v1.0 is basically the original Instructables / moononournation project, with some UI tweaks. This manual is for v2.0 (`Dual Band Wi-Fi Analyser v2.0`).
