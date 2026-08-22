@@ -7,6 +7,8 @@ This started from moononournation’s analyzer on [Instructables](https://www.in
 
 How to wire it, what parts you need, and how to flash it from Arduino IDE: **[USER_MANUAL.md](USER_MANUAL.md)**
 
+Ready-made binaries (no compile): **[packages/](packages/)** — flash [v2.0](packages/Dual-Band-Wi-Fi-Analyser-v2.0.bin) or [v1.0](packages/Dual-Band-Wi-Fi-Analyser-v1.0.bin) with the steps in [packages/README.md](packages/README.md).
+
 <p>
 <img src="docs/images/esp32-c5-board.png" alt="ESP32-C5-DevKitC-1" width="520">
 <br>
@@ -58,6 +60,7 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 
 ## What’s in this folder
 
+- [`packages/`](packages/) — pre-built `.bin` files for v1.0 and v2.0, plus how to flash them
 - [`Dual Band Wi-Fi Analyser v2.0/`](Dual%20Band%20Wi-Fi%20Analyser%20v2.0/) — current firmware. Open [`Dual Band Wi-Fi Analyser v2.0.ino`](Dual%20Band%20Wi-Fi%20Analyser%20v2.0/Dual%20Band%20Wi-Fi%20Analyser%20v2.0.ino) in Arduino IDE.
 - [`USER_MANUAL.md`](USER_MANUAL.md) — parts, wiring, flashing, how the screens work
 - `docs/images/` — board photos, wiring diagram, and screen mockups

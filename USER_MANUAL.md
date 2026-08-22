@@ -102,6 +102,24 @@ This is beacons and probe responses, not airtime. Fine for “don’t put the ne
 
 ---
 
+## Flash a pre-built binary (no Arduino compile)
+
+Merged images for ESP32-C5 (16MB, Huge APP) live in [`packages/`](packages/):
+
+- [`packages/Dual-Band-Wi-Fi-Analyser-v2.0.bin`](packages/Dual-Band-Wi-Fi-Analyser-v2.0.bin) — current firmware
+- [`packages/Dual-Band-Wi-Fi-Analyser-v1.0.bin`](packages/Dual-Band-Wi-Fi-Analyser-v1.0.bin) — v1.0 spectrum UI
+
+Hold **BOOT**, tap **RESET**, release **BOOT**. Then (change `COM5` to your port):
+
+```
+pip install esptool
+esptool --chip esp32c5 --port COM5 --baud 921600 write-flash 0x0 Dual-Band-Wi-Fi-Analyser-v2.0.bin
+```
+
+Flash at **0x0**. Full notes: [`packages/README.md`](packages/README.md). Tap RESET when it is done.
+
+---
+
 ## Flashing with Arduino IDE
 
 Same recipe as the original text file: C5 board package 3.3.1+, 16MB flash, 921600, Huge APP, GFX + u8g2.

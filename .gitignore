@@ -1,9 +1,11 @@
 # Arduino / ESP32 build output
 build/
+packages/*-build/
 *.map
 *.elf
-*.bin
 *.hex
+*.bin
+!packages/*.bin
 
 # OS / editor
 .DS_Store
