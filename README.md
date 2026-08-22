@@ -1,6 +1,6 @@
 # ESP32 Dual-Band Wi-Fi Analyzer
 
-The Hardware: ESP32-C5 board plus an ILI9341 screen, jumper cables and a bredboard to mount ESP32 and Screen. 
+The Hardware: ESP32-C5 board plus an ILI9341 screen, jumper cables and a breadboard to mount ESP32 and Screen. 
 Use: Walk around, see what’s on 2.4 GHz and 5 GHz, pick a quieter channel. That’s the whole point.
 
 This started from moononournation’s analyzer on [Instructables](https://www.instructables.com/ESP32-C5-Dual-Band-WiFi-Analyzer/). **v2.0** is the firmware in this repo (four screens, channel scores, AP list, a short site summary). v1.0 is basically that original project from Instructables, with some UI tweaks made for better useability.
@@ -49,7 +49,7 @@ Arduino settings that actually work on this hardware : under tools menu in Ardui
 - Flash size **16MB**
 - Upload speed **921600**
 - Partition: **Huge APP (3MB No OTA)**
-- Libraries: GFX Library for Arduino (moononournation) and U8g2 (https://github.com/moononournation/Arduino_GFX)
+- Libraries: [GFX Library for Arduino](https://github.com/moononournation/Arduino_GFX) (moononournation) and [U8g2](https://github.com/olikraus/u8g2) (olikraus)
 
 Put the board in download mode first if upload fails: hold BOOT, tap RESET, let go of BOOT.
 
@@ -60,6 +60,11 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 
 - `ESP32C5_WiFi_Planner/` — current firmware (v2.0)
 - `USER_MANUAL.md` — parts, wiring, flashing, how the screens work
+- `docs/images/` — board photos, wiring diagram, and screen mockups
+- `ESP32C5WiFiAnalyzerUTF8/` — v1.0 sketch (original Instructables analyzer, with some UI tweaks)
+- `ESP32C5WiFiAnalyzerUTF8_1.ino` — older single-file copy of that v1 sketch (Arduino IDE wants the `.ino` inside a matching folder; use the folder above)
+- `Readme.txt` — original hardware / pin notes
+- `firmware` — leftover placeholder from the first repo upload; not used by v2.0
 
 
 ## Image credits
