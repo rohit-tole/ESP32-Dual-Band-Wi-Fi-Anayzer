@@ -1,5 +1,5 @@
 /*******************************************************************************
- * ESP32-C5 Wi-Fi Planner
+ * Dual Band Wi-Fi Analyser v2.0
  *
  * Arduino IDE:
  *   Board: ESP32 -> ESP32C5 Dev Module  (Arduino-ESP32 3.3.1+)
@@ -1074,7 +1074,7 @@ void setup()
   gfx->setFont(u8g2_font_helvR08_tr);
   gfx->setTextColor(RGB565_WHITE);
   gfx->setCursor(8, 28);
-  gfx->print(F("ESP32-C5 Wi-Fi Planner"));
+  gfx->print(F("Dual Band Wi-Fi Analyser"));
   gfx->setFont(u8g2_font_5x7_tr);
   gfx->setCursor(8, 48);
   gfx->print(F("BOOT: cycle screens"));
@@ -1088,7 +1088,7 @@ void setup()
 
   last_scan_ms = millis() - SCAN_INTERVAL_MS;
   dirty = true;
-  Serial.println(F("ESP32-C5 Wi-Fi Planner ready"));
+  Serial.println(F("Dual Band Wi-Fi Analyser v2.0 ready"));
 }
 
 void loop()

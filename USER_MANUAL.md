@@ -1,4 +1,4 @@
-# User manual (v2.0)
+# Dual Band Wi-Fi Analyser v2.0 — user manual
 
 ESP32-C5 + ILI9341. It scans 2.4 and 5 GHz and draws what it heard. It does not join your Wi-Fi, and it is not a calibrated meter. RSSI moves if you turn the board or stand in front of the antenna. Treat it as a walk-around tool, then confirm with something proper if the design actually matters.
 
@@ -118,9 +118,9 @@ Then Library Manager: **GFX Library for Arduino** (moononournation) and **U8g2**
 
 **Open the right sketch**
 
-File → Open → `Dual Band Wi-Fi Analyser v2.0/Dual Band Wi-Fi Analyser v2.0.ino`
+File → Open → [`Dual Band Wi-Fi Analyser v2.0/Dual Band Wi-Fi Analyser v2.0.ino`](Dual%20Band%20Wi-Fi%20Analyser%20v2.0/Dual%20Band%20Wi-Fi%20Analyser%20v2.0.ino)
 
-That’s the current firmware. Don’t open another `.ino` from this repo in the same IDE window or Arduino will glue the files together.
+That’s the current firmware. For the older sketch use [`Dual Band Wi-Fi Analyser v1.0/Dual Band Wi-Fi Analyser v1.0.ino`](Dual%20Band%20Wi-Fi%20Analyser%20v1.0/Dual%20Band%20Wi-Fi%20Analyser%20v1.0.ino). Don’t open another `.ino` from this repo in the same IDE window or Arduino will glue the files together.
 
 **Download mode**
 
@@ -135,7 +135,7 @@ Plug in USB. If the port is missing or upload dies, hold **BOOT**, tap **RESET**
 | Upload Speed | 921600 |
 | Partition Scheme | Huge APP (3MB No OTA) |
 
-Verify, then Upload. If the screen stays black after “Hard resetting via RTS”, tap RESET. You should get “ESP32-C5 Wi-Fi Planner” and then the spectrum after the first scan.
+Verify, then Upload. If the screen stays black after “Hard resetting via RTS”, tap RESET. You should get **Dual Band Wi-Fi Analyser** on the banner, then the spectrum after the first scan.
 
 Serial Monitor at **115200** if you want the CSV.
 
@@ -167,4 +167,4 @@ Only scan networks you’re supposed to be looking at. C5 has no 6 GHz. DFS (52�
 
 ---
 
-v1.0 is basically the original Instructables / moononournation project, with some UI tweaks. This manual is for v2.0 (`Dual Band Wi-Fi Analyser v2.0`).
+v1.0 is basically the original Instructables / moononournation project, with some UI tweaks ([`Dual Band Wi-Fi Analyser v1.0`](Dual%20Band%20Wi-Fi%20Analyser%20v1.0/)). This manual is for [`Dual Band Wi-Fi Analyser v2.0`](Dual%20Band%20Wi-Fi%20Analyser%20v2.0/).

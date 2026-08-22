@@ -1,9 +1,9 @@
-# ESP32 Dual-Band Wi-Fi Analyzer
+# Dual Band Wi-Fi Analyser
 
 The Hardware: ESP32-C5 board plus an ILI9341 screen, jumper cables and a breadboard to mount ESP32 and Screen. 
 Use: Walk around, see what’s on 2.4 GHz and 5 GHz, pick a quieter channel. That’s the whole point.
 
-This started from moononournation’s analyzer on [Instructables](https://www.instructables.com/ESP32-C5-Dual-Band-WiFi-Analyzer/). **v2.0** is the firmware in this repo (four screens, channel scores, AP list, a short site summary). v1.0 is basically that original project from Instructables, with some UI tweaks made for better useability.
+This started from moononournation’s analyzer on [Instructables](https://www.instructables.com/ESP32-C5-Dual-Band-WiFi-Analyzer/). **[Dual Band Wi-Fi Analyser v2.0](Dual%20Band%20Wi-Fi%20Analyser%20v2.0/)** is the firmware in this repo (four screens, channel scores, AP list, a short site summary). **[Dual Band Wi-Fi Analyser v1.0](Dual%20Band%20Wi-Fi%20Analyser%20v1.0/)** is basically that original project from Instructables, with some UI tweaks made for better useability.
 
 How to wire it, what parts you need, and how to flash it from Arduino IDE: **[USER_MANUAL.md](USER_MANUAL.md)**
 
@@ -19,7 +19,7 @@ How to wire it, what parts you need, and how to flash it from Arduino IDE: **[US
 <em>Typical ILI9341 SPI module (320×240). Photo from <a href="https://imgaz1.staticbg.com/thumb/large/oaupload/banggood/images/DE/26/ebb27e89-c2b9-4de0-8488-37da3f1b2651.JPG.webp">Banggood / staticbg</a>. SDO/MISO is unused here.</em>
 </p>
 
-## v2.0 in short
+## Dual Band Wi-Fi Analyser v2.0 in short
 
 After it boots, tap **BOOT** to flip screens (spectrum → score → AP list → site). Hold BOOT on the list to scroll; on the other screens it dumps CSV over serial at 115200.
 
@@ -58,10 +58,10 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 
 ## What’s in this folder
 
-- `Dual Band Wi-Fi Analyser v2.0/` — current firmware (v2.0)
-- `USER_MANUAL.md` — parts, wiring, flashing, how the screens work
+- [`Dual Band Wi-Fi Analyser v2.0/`](Dual%20Band%20Wi-Fi%20Analyser%20v2.0/) — current firmware. Open [`Dual Band Wi-Fi Analyser v2.0.ino`](Dual%20Band%20Wi-Fi%20Analyser%20v2.0/Dual%20Band%20Wi-Fi%20Analyser%20v2.0.ino) in Arduino IDE.
+- [`USER_MANUAL.md`](USER_MANUAL.md) — parts, wiring, flashing, how the screens work
 - `docs/images/` — board photos, wiring diagram, and screen mockups
-- `Dual Band Wi-Fi Analyser v1.0/` — v1.0 sketch (original Instructables analyzer, with some UI tweaks)
+- [`Dual Band Wi-Fi Analyser v1.0/`](Dual%20Band%20Wi-Fi%20Analyser%20v1.0/) — v1.0 sketch (original Instructables analyzer, with some UI tweaks). Open [`Dual Band Wi-Fi Analyser v1.0.ino`](Dual%20Band%20Wi-Fi%20Analyser%20v1.0/Dual%20Band%20Wi-Fi%20Analyser%20v1.0.ino).
 - `ESP32C5WiFiAnalyzerUTF8_1.ino` — extra v1 copy at repo root (open the v1.0 folder in Arduino IDE, not this file)
 - `Readme.txt` — original hardware / pin notes
 - `firmware` — leftover placeholder from the first repo upload; not used by v2.0
@@ -71,5 +71,5 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 
 - ESP32-C5 board: [Espressif ESP32-C5-DevKitC-1 user guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html)
 - ILI9341 module: [Banggood / staticbg photo](https://imgaz1.staticbg.com/thumb/large/oaupload/banggood/images/DE/26/ebb27e89-c2b9-4de0-8488-37da3f1b2651.JPG.webp) (typical SPI 320×240 module)
-- Spectrum / score / AP list / site screens: UI mockups of this project’s v2.0 firmware, not photos of hardware
+- Spectrum / score / AP list / site screens: UI mockups of Dual Band Wi-Fi Analyser v2.0, not photos of hardware
 - wiring.png: pin diagram for this project (3v3–VCC, GND, GPIO23–CS, GPIO25–Reset, GPIO24–DC/RS, GPIO8–SDI/MOSI, GPIO10–SCK, GPIO26–LED)
