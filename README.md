@@ -76,3 +76,8 @@ Put the board in download mode first if upload fails: hold BOOT, tap RESET, let 
 - ILI9341 module: [Banggood / staticbg photo](https://imgaz1.staticbg.com/thumb/large/oaupload/banggood/images/DE/26/ebb27e89-c2b9-4de0-8488-37da3f1b2651.JPG.webp) (typical SPI 320×240 module)
 - Spectrum / score / AP list / site screens: UI mockups of Dual Band Wi-Fi Analyser v2.0, not photos of hardware
 - wiring.png: pin diagram for this project (3v3–VCC, GND, GPIO23–CS, GPIO25–Reset, GPIO24–DC/RS, GPIO8–SDI/MOSI, GPIO10–SCK, GPIO26–LED)
+
+## Disclaimer
+- This project was developed entirely on personal time, utilizing strictly personal hardware and independent network infrastructure. 
+- It is an independent, open-source initiative and is not affiliated with, endorsed by, or funded by any past or present employer. 
+- No proprietary corporate data, architectures, or resources were used in the creation of this repository."
